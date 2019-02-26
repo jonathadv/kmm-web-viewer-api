@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app.models import (Kmmaccounts, Kmmbudgetconfig, Kmmcurrencies, Kmmfileinfo, Kmminstitutions, Kmmkeyvaluepairs,
+from kmm.models import (Kmmaccounts, Kmmbudgetconfig, Kmmcurrencies, Kmmfileinfo, Kmminstitutions, Kmmkeyvaluepairs,
                         Kmmpayees, Kmmprices, Kmmreportconfig, Kmmschedulepaymenthistory, Kmmschedules, Kmmsecurities,
                         Kmmsplits, Kmmtransactions)
 

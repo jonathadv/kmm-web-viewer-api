@@ -75,17 +75,14 @@ WSGI_APPLICATION = 'kmmviewer.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 DATABASE_ROUTERS = ['kmm.db_routers.KmmDBRouter', 'kmm.db_routers.DjangoDBRouter']
 DATABASES = {
-    'default': {
-        #'ENGINE': 'django.db.backends.sqlite3',
-       # 'NAME': os.path.join(BASE_DIR, 'default.sqlite3'),
-    },
+    'default': {},
     'django_db': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'django.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'dbs', 'django.sqlite3'),
     },
     'kmm_db': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'kmm.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'dbs', 'kmm.sqlite3'),
     }
 }
 

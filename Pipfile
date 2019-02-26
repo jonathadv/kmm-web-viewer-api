@@ -9,4 +9,4 @@ python_version = "3.6"
 [dev-packages]
 
 [packages]
-django = "*"
+django = "~=2.1"

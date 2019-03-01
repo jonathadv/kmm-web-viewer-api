@@ -7,6 +7,9 @@ url = "https://pypi.python.org/simple"
 python_version = "3.6"
 
 [dev-packages]
+pylint = "==2.2.2"
+black = "==18.9b0"
+coverage = "==4.5.2"
 
 [packages]
 django = "~=2.1"

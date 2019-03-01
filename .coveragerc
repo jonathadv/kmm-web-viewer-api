@@ -1,0 +1,6 @@
+[run]
+source=app
+
+[report]
+fail_under=56
+show_missing=true

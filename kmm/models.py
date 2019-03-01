@@ -371,9 +371,12 @@ class Kmmsplits(models.Model):
     splitid = models.PositiveSmallIntegerField(
         db_column="splitId"
     )  # Field name made lowercase.
-    payeeid = models.CharField(
-        db_column="payeeId", max_length=32, blank=True, null=True
-    )  # Field name made lowercase.
+    # payeeid = models.CharField(
+    #    db_column="payeeId", max_length=32, blank=True, null=True
+    # )  # Field name made lowercase.
+    payeeid = models.ForeignKey(
+        Kmmpayees, db_column="payeeid", on_delete=models.DO_NOTHING
+    )
     reconciledate = models.TextField(
         db_column="reconcileDate", blank=True, null=True
     )  # Field name made lowercase. This field type is a guess.

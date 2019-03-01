@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from kmm.models import Kmmtransactions, Kmmsplits
+from kmm.models import Kmmtransactions, Kmmsplits, Kmmpayees
 
 
 class TransactionSerializer(serializers.HyperlinkedModelSerializer):
@@ -38,4 +38,24 @@ class SplitSerializer(serializers.HyperlinkedModelSerializer):
             "checknumber",
             "postdate",
             "bankid",
+        )
+
+
+class PayeeSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Kmmpayees
+        fields = (
+            "name",
+            "reference",
+            "email",
+            "addressstreet",
+            "addresscity",
+            "addresszipcode",
+            "addressstate",
+            "telephone",
+            "notes",
+            "defaultaccountid",
+            "matchdata",
+            "matchignorecase",
+            "matchkeys",
         )

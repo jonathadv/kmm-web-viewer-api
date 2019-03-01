@@ -1,3 +1,4 @@
+# pylint: disable=function-redefined
 from django.apps import AppConfig
 
 

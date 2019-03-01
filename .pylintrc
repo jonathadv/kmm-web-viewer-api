@@ -1,0 +1,32 @@
+[MASTER]
+ignore=migrations
+
+[BASIC]
+# List of builtins function names that should not be used, separated by a comma
+bad-functions=map,filter,input
+
+# Good variable names which should always be accepted, separated by a comma
+good-names=pk,i,j,k,v,e,ex,Run,_,to,cc
+
+[DESIGN]
+
+# Maximum number of arguments for function / method
+max-args=7
+
+# Maximum number of attributes for a class (see R0902).
+max-attributes=7
+
+# Minimum number of public methods for a class (see R0903).
+min-public-methods=0
+
+# Maximum number of public methods for a class (see R0904).
+max-public-methods=20
+
+max-parents=15
+
+[MESSAGES CONTROL]
+disable=
+    missing-docstring,
+    no-member,
+    # handled by black
+    format

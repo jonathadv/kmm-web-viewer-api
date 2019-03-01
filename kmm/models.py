@@ -13,9 +13,13 @@ class Kmmaccounts(models.Model):
     institutionid = models.CharField(
         db_column="institutionId", max_length=32, blank=True, null=True
     )  # Field name made lowercase.
-    parentid = models.CharField(
-        db_column="parentId", max_length=32, blank=True, null=True
-    )  # Field name made lowercase.
+    parentid = models.ForeignKey(
+        "Kmmaccounts",
+        db_column="parentid",
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
     lastreconciled = models.TextField(
         db_column="lastReconciled", blank=True, null=True
     )  # Field name made lowercase. This field type is a guess.

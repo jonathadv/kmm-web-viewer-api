@@ -4,6 +4,7 @@ from django.views.generic import View
 
 from kmm.models import Kmmtransactions
 
+
 class Transactions(View):
     def get(self, request: HttpRequest, *args, **kwargs):
         data = serializers.serialize("json", Kmmtransactions.objects.all())

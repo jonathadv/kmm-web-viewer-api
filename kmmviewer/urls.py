@@ -18,6 +18,6 @@ from django.urls import path
 from kmm.views import Transactions
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path("api/transactions", Transactions.as_view(), name="transactions"),
 ]

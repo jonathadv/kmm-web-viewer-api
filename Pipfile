@@ -13,3 +13,4 @@ coverage = "==4.5.2"
 
 [packages]
 django = "~=2.1"
+djangorestframework = "~=3.9"

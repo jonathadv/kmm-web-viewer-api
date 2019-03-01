@@ -361,6 +361,7 @@ class Kmmsecurities(models.Model):
 
 
 class Kmmsplits(models.Model):
+    id = models.CharField(unique=True, max_length=32, primary_key=True)
     transactionid = models.CharField(
         db_column="transactionId", max_length=32
     )  # Field name made lowercase.

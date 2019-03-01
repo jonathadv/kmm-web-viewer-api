@@ -33,6 +33,15 @@ test-cov:
 	pipenv run coverage run manage.py test --verbosity=2;
 	pipenv run coverage report
 
+# Migrate Django and Kmm Models
+migrate:
+	pipenv run python manage.py migrate --database=kmm_db kmm; \
+	pipenv run python manage.py migrate --database=django_db admin; \
+	pipenv run python manage.py migrate --database=django_db auth; \
+	pipenv run python manage.py migrate --database=django_db sessions; \
+	pipenv run python manage.py migrate --database=django_db contenttypes; \
+
+
 # Run pylint
 lint:
 	set -e; pipenv run pylint $(DJANGO_APP)/

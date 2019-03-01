@@ -1,11 +1,13 @@
-from django.core import serializers
-from django.http import HttpResponse, HttpRequest
-from django.views.generic import View
-
-from kmm.models import Kmmtransactions
+from rest_framework import viewsets
+from kmm.models import Kmmtransactions, Kmmsplits
+from kmm.serializers import TransactionSerializer, SplitSerializer
 
 
-class Transactions(View):
-    def get(self, request: HttpRequest, *args, **kwargs):
-        data = serializers.serialize("json", Kmmtransactions.objects.all())
-        return HttpResponse(data, content_type="application/json")
+class TransactionsViewSet(viewsets.ModelViewSet):
+    queryset = Kmmtransactions.objects.all()
+    serializer_class = TransactionSerializer
+
+
+class SplitsViewSet(viewsets.ModelViewSet):
+    queryset = Kmmsplits.objects.all()
+    serializer_class = SplitSerializer

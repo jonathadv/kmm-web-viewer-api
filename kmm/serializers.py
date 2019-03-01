@@ -39,56 +39,68 @@ class SplitSerializer(serializers.HyperlinkedModelSerializer):
 
 class TransactionSerializer(serializers.HyperlinkedModelSerializer):
     account = serializers.SerializerMethodField()
-    pay_to = serializers.SerializerMethodField()
-    category = serializers.SerializerMethodField()
-    # kmmsplits_set = SplitSerializer(many=True, read_only=True)
+    payee = serializers.SerializerMethodField()
     amount = serializers.SerializerMethodField()
-    transaction_type = serializers.SerializerMethodField()
+    currency = serializers.SerializerMethodField()
+    memo = serializers.SerializerMethodField()
+    splits = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
+    type = serializers.SerializerMethodField()
 
-    def get_transaction_type(self, obj):
+    def get_status(self, obj):
         split = obj.kmmsplits_set.all().filter(splitid=1)[0]
-        type_options = {"N": "normal", "S": "scheduled"}
+        status = {"N": "normal", "S": "scheduled"}
+        return status.get(split.txtype, "unknown")
+
+    def get_splits(self, obj):
+        return obj.kmmsplits_set.all().values(
+            "id", "valueformatted", "accountid_id__accountname"
+        )
+
+    def get_type(self, obj):
+        split = obj.kmmsplits_set.all().filter(splitid=1)[0]
         account_type = None
 
         for t in AccountType:
             if t.value == split.accountid.accounttype:
                 account_type = t.name
+                break
 
-        result = {
-            "type": type_options.get(split.txtype, "unknown"),
-            "value_type": account_type,
-        }
-
-        return result
+        return account_type
 
     def get_account(self, obj):
         split = obj.kmmsplits_set.all().filter(splitid=0)[0]
         return split.accountid.accountname
 
-    def get_pay_to(self, obj):
+    def get_payee(self, obj):
         split = obj.kmmsplits_set.all().filter(splitid=1)[0]
         return split.payeeid.name
 
-    def get_category(self, obj):
-        split = obj.kmmsplits_set.all().filter(splitid=1)[0]
-        return split.accountid.accountname
-
     def get_amount(self, obj):
-        split = obj.kmmsplits_set.all().filter(splitid=1)[0]
+        split = obj.kmmsplits_set.all().filter(splitid=0)[0]
         return split.valueformatted
+
+    def get_currency(self, obj):
+        return obj.currencyid
+
+    def get_memo(self, obj):
+        split = obj.kmmsplits_set.all().filter(splitid=1)[0]
+        return split.memo
 
     class Meta:
         model = Kmmtransactions
         fields = (
             "id",
-            "transaction_type",
+            "status",
+            "type",
             "memo",
-            "currencyid",
+            "currency",
             "account",
-            "pay_to",
-            "category",
+            "payee",
             "amount",
-            # "kmmsplits_set",
+            "entrydate",
+            "postdate",
+            "splits",
         )
 
 

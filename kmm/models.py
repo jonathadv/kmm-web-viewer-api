@@ -362,18 +362,11 @@ class Kmmsecurities(models.Model):
 
 class Kmmsplits(models.Model):
     id = models.CharField(unique=True, max_length=32, primary_key=True)
-    transactionid = models.CharField(
-        db_column="transactionId", max_length=32
-    )  # Field name made lowercase.
-    txtype = models.CharField(
-        db_column="txType", max_length=1, blank=True, null=True
-    )  # Field name made lowercase.
-    splitid = models.PositiveSmallIntegerField(
-        db_column="splitId"
-    )  # Field name made lowercase.
-    # payeeid = models.CharField(
-    #    db_column="payeeId", max_length=32, blank=True, null=True
-    # )  # Field name made lowercase.
+    transactionid = models.ForeignKey(
+        "Kmmtransactions", db_column="transactionid", on_delete=models.DO_NOTHING
+    )
+    txtype = models.CharField(db_column="txType", max_length=1, blank=True, null=True)
+    splitid = models.PositiveSmallIntegerField(db_column="splitId")
     payeeid = models.ForeignKey(
         Kmmpayees, db_column="payeeid", on_delete=models.DO_NOTHING
     )
@@ -393,13 +386,11 @@ class Kmmsplits(models.Model):
         db_column="sharesFormatted", blank=True, null=True
     )  # Field name made lowercase. This field type is a guess.
     price = models.TextField(blank=True, null=True)
-    priceformatted = models.TextField(
-        db_column="priceFormatted", blank=True, null=True
-    )  # Field name made lowercase. This field type is a guess.
-    memo = models.TextField(blank=True, null=True)  # This field type is a guess.
-    accountid = models.CharField(
-        db_column="accountId", max_length=32
-    )  # Field name made lowercase.
+    priceformatted = models.TextField(db_column="priceFormatted", blank=True, null=True)
+    memo = models.TextField(blank=True, null=True)
+    accountid = models.ForeignKey(
+        Kmmaccounts, db_column="accountid", on_delete=models.DO_NOTHING
+    )
     checknumber = models.CharField(
         db_column="checkNumber", max_length=32, blank=True, null=True
     )  # Field name made lowercase.

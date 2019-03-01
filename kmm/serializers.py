@@ -1,19 +1,5 @@
 from rest_framework import serializers
-from kmm.models import Kmmtransactions, Kmmsplits, Kmmpayees
-
-
-class TransactionSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Kmmtransactions
-        fields = (
-            "id",
-            "txtype",
-            "postdate",
-            "memo",
-            "entrydate",
-            "currencyid",
-            "bankid",
-        )
+from kmm.models import Kmmtransactions, Kmmsplits, Kmmpayees, Kmmaccounts
 
 
 class SplitSerializer(serializers.HyperlinkedModelSerializer):
@@ -41,6 +27,23 @@ class SplitSerializer(serializers.HyperlinkedModelSerializer):
         )
 
 
+class TransactionSerializer(serializers.HyperlinkedModelSerializer):
+    kmmsplits_set = SplitSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Kmmtransactions
+        fields = (
+            "id",
+            "txtype",
+            "postdate",
+            "memo",
+            "entrydate",
+            "currencyid",
+            "bankid",
+            "kmmsplits_set",
+        )
+
+
 class PayeeSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Kmmpayees
@@ -58,4 +61,26 @@ class PayeeSerializer(serializers.HyperlinkedModelSerializer):
             "matchdata",
             "matchignorecase",
             "matchkeys",
+        )
+
+
+class AccountSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Kmmaccounts
+        fields = (
+            "institutionid",
+            "parentid",
+            "lastreconciled",
+            "lastmodified",
+            "openingdate",
+            "accountnumber",
+            "accounttype",
+            "accounttypestring",
+            "isstockaccount",
+            "accountname",
+            "description",
+            "currencyid",
+            "balance",
+            "balanceformatted",
+            "transactioncount",
         )

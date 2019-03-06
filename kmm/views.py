@@ -9,7 +9,12 @@ from kmm.serializers import (
 
 
 class TransactionsViewSet(viewsets.ModelViewSet):
-    queryset = Kmmtransactions.objects.all()
+    queryset = (
+        Kmmtransactions.objects.prefetch_related("kmmsplits_set")
+        .prefetch_related("kmmsplits_set__payeeid")
+        .prefetch_related("kmmsplits_set__accountid")
+        .all()
+    )
     serializer_class = TransactionSerializer
 
 

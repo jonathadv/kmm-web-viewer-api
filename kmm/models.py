@@ -416,11 +416,11 @@ class Kmmtransactions(models.Model):
     txtype = models.CharField(
         db_column="txType", max_length=1, blank=True, null=True
     )  # Field name made lowercase.
-    postdate = models.TextField(
+    postdate = models.DateField(
         db_column="postDate", blank=True, null=True
     )  # Field name made lowercase. This field type is a guess.
     memo = models.TextField(blank=True, null=True)  # This field type is a guess.
-    entrydate = models.TextField(
+    entrydate = models.DateField(
         db_column="entryDate", blank=True, null=True
     )  # Field name made lowercase. This field type is a guess.
     currencyid = models.CharField(

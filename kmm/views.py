@@ -1,3 +1,6 @@
+from django.views.generic import View
+from django.http import HttpRequest, HttpResponseRedirect
+
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.request import Request
@@ -12,6 +15,11 @@ from kmm.serializers import (
 )
 
 
+class IndexView(View):
+    def get(self, request: Request, *args, **kwargs):
+        return HttpResponseRedirect("/static/index.html")
+
+
 class TransactionsViewSet(viewsets.ModelViewSet):
     queryset = (
         Kmmtransactions.objects.prefetch_related("kmmsplits_set")
@@ -23,7 +31,6 @@ class TransactionsViewSet(viewsets.ModelViewSet):
 
 
 class SplitsViewSet(viewsets.ModelViewSet):
-
     queryset = Kmmsplits.objects.all()
     serializer_class = SplitSerializer
 

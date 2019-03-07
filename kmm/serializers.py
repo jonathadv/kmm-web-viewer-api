@@ -130,6 +130,7 @@ class AccountSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Kmmaccounts
         fields = (
+            "id",
             "institutionid",
             "parentid",
             "lastreconciled",

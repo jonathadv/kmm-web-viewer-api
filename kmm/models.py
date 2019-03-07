@@ -20,10 +20,10 @@ class Kmmaccounts(models.Model):
         blank=True,
         null=True,
     )
-    lastreconciled = models.TextField(
+    lastreconciled = models.DateField(
         db_column="lastReconciled", blank=True, null=True
     )  # Field name made lowercase. This field type is a guess.
-    lastmodified = models.TextField(
+    lastmodified = models.DateField(
         db_column="lastModified", blank=True, null=True
     )  # Field name made lowercase. This field type is a guess.
     openingdate = models.DateField(
@@ -374,7 +374,7 @@ class Kmmsplits(models.Model):
     payeeid = models.ForeignKey(
         Kmmpayees, db_column="payeeid", on_delete=models.DO_NOTHING
     )
-    reconciledate = models.TextField(
+    reconciledate = models.DateField(
         db_column="reconcileDate", blank=True, null=True
     )  # Field name made lowercase. This field type is a guess.
     action = models.CharField(max_length=16, blank=True, null=True)
@@ -398,7 +398,7 @@ class Kmmsplits(models.Model):
     checknumber = models.CharField(
         db_column="checkNumber", max_length=32, blank=True, null=True
     )  # Field name made lowercase.
-    postdate = models.TextField(
+    postdate = models.DateField(
         db_column="postDate", blank=True, null=True
     )  # Field name made lowercase. This field type is a guess.
     bankid = models.TextField(

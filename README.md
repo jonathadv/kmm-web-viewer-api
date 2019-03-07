@@ -1,5 +1,5 @@
 # kmymoney-web-viewer
-A web viewer for kMyMoney database
+A web viewer for [kMyMoney](https://github.com/KDE/kmymoney) database
 
 
 Open kmymoney with sqlite file:

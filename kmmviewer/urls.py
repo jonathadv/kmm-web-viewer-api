@@ -9,7 +9,7 @@ router.register(r"payees", PayeeViewSet)
 router.register(r"accounts", AccountViewSet)
 
 urlpatterns = [
-    path("api", include(router.urls)),
+    path("api/", include(router.urls)),
     path("api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     path("", IndexView.as_view(), name="index"),
 ]

@@ -25,7 +25,7 @@ class TransactionsViewSet(viewsets.ModelViewSet):
         Kmmtransactions.objects.prefetch_related("kmmsplits_set")
         .prefetch_related("kmmsplits_set__payeeid")
         .prefetch_related("kmmsplits_set__accountid")
-        .all()
+        .all().order_by("-id")
     )
     serializer_class = TransactionSerializer
 
@@ -46,6 +46,11 @@ class AccountViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, url_path="transactions", methods=["get"], name="list user groups")
     def transactions(self, request: Request, pk):
-        transactions = Kmmtransactions.objects.filter(kmmsplits__accountid=pk)
+        transactions = Kmmtransactions.objects.filter(kmmsplits__accountid=pk).order_by("-id")
+        page = self.paginate_queryset(transactions)
+        if page:
+            serializer = TransactionSerializer(page, many=True)
+            return self.get_paginated_response(data=serializer.data)
+
         serializer = TransactionSerializer(transactions, many=True)
         return Response(data=serializer.data)

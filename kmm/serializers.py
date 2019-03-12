@@ -1,3 +1,4 @@
+from attr import has
 from rest_framework import serializers
 from kmm.models import Kmmtransactions, Kmmsplits, Kmmpayees, Kmmaccounts
 
@@ -76,7 +77,9 @@ class TransactionSerializer(serializers.HyperlinkedModelSerializer):
 
     def get_payee(self, obj):
         split = [x for x in obj.kmmsplits_set.all() if x.splitid == 1][0]
-        return split.payeeid.name
+        if hasattr(split, "payeeid"):
+            return split.payeeid.name
+        return None
 
     def get_amount(self, obj):
         split = [x for x in obj.kmmsplits_set.all() if x.splitid == 0][0]

@@ -49,9 +49,12 @@ class TransactionSerializer(serializers.HyperlinkedModelSerializer):
     type = serializers.SerializerMethodField()
 
     def get_status(self, obj):
-        split = [x for x in obj.kmmsplits_set.all() if x.splitid == 1][0]
-        status = {"N": "normal", "S": "scheduled"}
-        return status.get(split.txtype, "unknown")
+        splits = [x for x in obj.kmmsplits_set.all() if x.splitid == 1]
+        if splits:
+            split = splits[0]
+            status = {"N": "normal", "S": "scheduled"}
+            return status.get(split.txtype, "unknown")
+        return None
 
     def get_splits(self, obj):
         splits = [
@@ -61,24 +64,29 @@ class TransactionSerializer(serializers.HyperlinkedModelSerializer):
         return splits
 
     def get_type(self, obj):
-        split = [x for x in obj.kmmsplits_set.all() if x.splitid == 1][0]
-        account_type = None
+        splits = [x for x in obj.kmmsplits_set.all() if x.splitid == 1]
+        if splits:
+            split = splits[0]
+            account_type = None
 
-        for t in AccountType:
-            if t.value == split.accountid.accounttype:
-                account_type = t.name
-                break
+            for t in AccountType:
+                if t.value == split.accountid.accounttype:
+                    account_type = t.name
+                    break
 
-        return account_type
+            return account_type
+        return None
 
     def get_account(self, obj):
         split = [x for x in obj.kmmsplits_set.all() if x.splitid == 0][0]
         return split.accountid.accountname
 
     def get_payee(self, obj):
-        split = [x for x in obj.kmmsplits_set.all() if x.splitid == 1][0]
-        if hasattr(split, "payeeid"):
-            return split.payeeid.name
+        splits = [x for x in obj.kmmsplits_set.all() if x.splitid == 1]
+        if splits:
+            split = splits[0]
+            if hasattr(split, "payeeid"):
+                return split.payeeid.name
         return None
 
     def get_amount(self, obj):
@@ -89,8 +97,11 @@ class TransactionSerializer(serializers.HyperlinkedModelSerializer):
         return obj.currencyid
 
     def get_memo(self, obj):
-        split = [x for x in obj.kmmsplits_set.all() if x.splitid == 1][0]
-        return split.memo
+        splits = [x for x in obj.kmmsplits_set.all() if x.splitid == 1]
+        if splits:
+            split = splits[0]
+            return split.memo
+        return None
 
     class Meta:
         model = Kmmtransactions
